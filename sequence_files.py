@@ -2,6 +2,13 @@ import os
 import re
 
 
+def create_history(name, extension, list):
+    # Display a list of current file names
+    print("New file names look like this:")
+    for file in list:
+        print(file)
+
+
 def rename_files(name, extension):
     sequence = 1
     # List Current Files in Directory
@@ -30,7 +37,7 @@ def check_files(location):
                   "*******************************************\n")
             return True
 
-    return rename_files(prefix, extension1)
+    return create_history(prefix, extension1, file_list)
 
 
 run = True
