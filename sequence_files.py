@@ -19,17 +19,18 @@ def check_files(location):
     file_list = []
     for file in os.listdir():
         # Adds all file extensions to a list.
-        extension = re.findall(r"(\.\w+)$", file)
-        file_list.append(extension)
+        file_list.append(file)
 
-    for ext in file_list:
-        # Checks if
-        if ext != file_list[0]:
+    extension1 = re.findall(r"(\.\w+)$", file_list[0])
+    for file in file_list:
+        extension2 = re.findall(r"(\.\w+)$", file)
+        # Checks if the file extensions are all the same.
+        if extension1 != extension2:
             print("Files in the directory are not all the same file type. Please try another directory.\n"
                   "*******************************************\n")
             return True
 
-    return rename_files(prefix, file_list[0])
+    return rename_files(prefix, extension1)
 
 
 run = True
