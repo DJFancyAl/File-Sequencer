@@ -4,9 +4,32 @@ import re
 
 def create_history(name, extension, list):
     # Display a list of current file names
-    print("New file names look like this:")
-    for file in list:
-        print(file)
+    print("New file names will look like this:")
+    i = 0
+    sequence = 1
+    old_name_length = 0
+    for i in range(5):
+        # Define variables
+        old_name = list[i]
+        if len(old_name) > old_name_length:
+            # Sets longest file length for formatting
+            old_name_length = len(old_name)
+        i += 1
+
+    for i in range(5):
+        old_name = list[i]
+        new_name = "{}{:03d}{}".format(name, sequence, extension)
+        print('{:>{}s} ----> {}'.format(old_name, old_name_length, new_name))
+        i += 1
+        sequence += 1
+
+    verify = input("**********************************\nWould you like to continue?\n")
+
+    if verify.lower() == 'y' or verify.lower() == 'yes':
+        pass
+
+    print("Okay. Let's try again.\n")
+    return True
 
 
 def rename_files(name, extension):
@@ -37,7 +60,7 @@ def check_files(location):
                   "*******************************************\n")
             return True
 
-    return create_history(prefix, extension1, file_list)
+    return create_history(prefix, extension1[0], file_list)
 
 
 run = True
