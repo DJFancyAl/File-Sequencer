@@ -3,18 +3,11 @@ import re
 import csv
 
 
-def rename_files(name, extension):
-    sequence = 1
-    # List Current Files in Directory
-    for file in os.listdir():
-        os.rename(file, "{}{:03d}{}".format(name, sequence, extension[0]))
-        sequence += 1
-    print("Files have been renamed!")
-    return False
-
-
 def check_files(location, name):
     # Change the working directory based off the file_directory input
+    if not os.path.isdir(location):
+        print("That directory does not exist...try again.\n")
+        return True
     os.chdir(location)
 
     file_list = []
@@ -23,7 +16,8 @@ def check_files(location, name):
 
     for file in os.listdir():
         # Adds all file extensions to a list.
-        file_list.append(file)
+        if file != 'file_history.csv':
+            file_list.append(file)
 
     extension1 = re.findall(r"(\.\w+)$", file_list[0])
     for file in file_list:
@@ -71,10 +65,23 @@ def show_demo(name_list, new_name_list):
 
 def create_history(old_list, new_list):
     history_list = dict(zip(old_list, new_list))
-    with open('.file_history.csv', 'w', newline="") as file_csv:
+    with open('file_history.csv', 'w', newline="") as file_csv:
         writer = csv.writer(file_csv)
         for file in history_list:
             writer.writerow([file] + [history_list[file]])
+
+    rename_files(new_list)
+
+
+def rename_files(new_names):
+    sequence = 0
+    # List Current Files in Directory
+    for file in os.listdir():
+        if file != 'file_history.csv':
+            os.rename(file, new_names[sequence])
+            sequence += 1
+    print("Files have been renamed!")
+    return False
 
 
 run = True
